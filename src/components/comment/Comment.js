@@ -54,6 +54,9 @@ class Comments extends Component {
     let resultArray = [];
 
     this.props.listComments.map((comment) => {
+      let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second:'numeric' };
+      let createdAt = new Date(comment.createdAt).toLocaleDateString('es-MX', options);
+
       resultArray.push(
         <li key={comment.id} className="collection-item avatar Comment-item">
           <img className="circle" src="https://image.flaticon.com/icons/png/128/168/168875.png" alt=""/>
@@ -62,6 +65,7 @@ class Comments extends Component {
             <p id="js-message" className="Comment-message" >{comment.message}</p>
             <a href="#modal1" className="material-icons Btn-edit" onClick={this.fillModal.bind(this, comment)}>edit</a>
           </div>
+          <span>{createdAt.toString()}</span>
           <i className="material-icons Btn-delete" onClick={this.remove.bind(this, comment)}>delete</i>
         </li>
       );

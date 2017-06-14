@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Comments from './Comments';
+import Comments from './components/comment/Comment';
 import uuid from 'uuid'
 
 class App extends Component {
@@ -12,7 +12,8 @@ class App extends Component {
       newComment: {
         id: 0,
         email: '',
-        message: ''
+        message: '',
+        createdAt: new Date()
       }
     }
 
@@ -27,11 +28,12 @@ class App extends Component {
     let email = this.email.value;
     let message = this.message.value;
     let id = uuid.v4();
+    let createdAt = new Date();
 
     this.setState({newComment});
 
     let comments = this.state.comments;
-    comments.push({id: id, email: email, message: message, name: name});
+    comments.push({id: id, email: email, message: message, name: name, createdAt: createdAt});
     this.setState({comments: comments});
 
     localStorage.setItem('comments', JSON.stringify(comments));
@@ -40,7 +42,7 @@ class App extends Component {
     this.email.value = '';
     this.message.value = '';
 
-    console.log(comments);
+    console.log(newComment);
   }
 
   render() {
