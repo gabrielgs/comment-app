@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Comments from './components/comment/Comment';
+import LineChart from './components/linechart/LineChart'
 import uuid from 'uuid'
 
 class App extends Component {
@@ -86,6 +87,9 @@ class App extends Component {
           </form>
         </div>
         <Comments listComments={this.state.comments}/>
+        <div className="row">
+          <LineChart/>
+        </div>
       </div>
     );
   }
