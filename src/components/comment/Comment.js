@@ -19,7 +19,8 @@ class Comments extends Component {
     const newState = this.props.listComments;
     if(newState.indexOf(comment) > -1) {
       newState.splice(newState.indexOf(comment), 1);
-      this.setState({comments: newState})
+      //this.setState({comments: newState})
+      this.props.updateComments(newState)
       localStorage.comments = JSON.stringify(newState);
     }
 
@@ -28,14 +29,15 @@ class Comments extends Component {
 
   edit() {
     var message = document.getElementById('js-editComment').value;
-    let newState = this.state.listComments;
+    let newState = this.props.listComments;
 
     var comment = this.state.comment;
 
     var foundIndexComment = newState.findIndex(x => x.id === comment.id);
     newState[foundIndexComment].message = message;
 
-    this.setState({comments: newState});
+    //this.setState({comments: newState});
+    this.props.updateComments(newState);
 
     localStorage.comments = JSON.stringify(newState);
 

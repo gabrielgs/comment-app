@@ -1,22 +1,13 @@
 import React, { Component } from 'react';
-import './App.css';
-import Comments from './components/comment/Comment';
-import LineChart from './components/linechart/LineChart';
-import Form from './components/form/Form'
+import './Form.css'
 import uuid from 'uuid'
 
-class App extends Component {
+class Form extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      comments: JSON.parse(localStorage.getItem('comments')) || [],
-      newComment: {
-        id: 0,
-        email: '',
-        message: '',
-        createdAt: new Date()
-      }
+      comments: JSON.parse(localStorage.getItem('comments')) || []
     }
 
     this.saveComment = this.saveComment.bind(this);
@@ -24,33 +15,35 @@ class App extends Component {
 
   saveComment(e) {
     e.preventDefault();
-    
-    let newComment = this.state.newComment;
-    let name = this.name.value;
-    let email = this.email.value;
-    let message = this.message.value;
+
     let id = uuid.v4();
+    let email = this.email.value;
+    let name = this.name.value;
+    let message = this.message.value;
     let createdAt = new Date();
-
-    this.setState({newComment});
-
     let comments = this.state.comments;
-    comments.push({id: id, email: email, message: message, name: name, createdAt: createdAt});
+
+    comments.push({
+      id: id, 
+      email: email,
+      name: name,
+      message: message,
+      createdAt: createdAt
+    });
+
     this.setState({comments: comments});
+    this.props.updateComments(comments);
 
     localStorage.setItem('comments', JSON.stringify(comments));
 
-    this.name.value = '';
     this.email.value = '';
+    this.name.value = '';
     this.message.value = '';
-
-    console.log(newComment);
   }
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
+      <div className="row">
           <h1 className="header center indigo-text text-darken-3">Deja un Comentario </h1>
           <form className="col s12">
             <div className="row">
@@ -87,14 +80,8 @@ class App extends Component {
             </div>
           </form>
         </div>
-        <Comments listComments={this.state.comments}/>
-        <div className="row">
-          <LineChart/>
-        </div>
-        <Form />
-      </div>
-    );
+    )
   }
 }
 
-export default App;
+export default Form
