@@ -16,12 +16,12 @@ class Form extends Component {
   saveComment(e) {
     e.preventDefault();
 
-    let id = uuid.v4();
-    let email = this.email.value;
-    let name = this.name.value;
-    let message = this.message.value;
-    let createdAt = new Date();
-    let comments = this.state.comments;
+    const id = uuid.v4();
+    const email = this.email.value;
+    const name = this.name.value;
+    const message = this.message.value;
+    const createdAt = new Date();
+    const comments = this.state.comments;
 
     comments.push({
       id: id, 

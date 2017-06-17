@@ -8,12 +8,12 @@ class LineChart extends Component {
     super(props)
 
     this.state = {
-
+      listComments: JSON.parse(localStorage.getItem('comments')) || []
     }
   }
 
-  updateCanvas() {
-    let comments = this.props.listComments
+  getData() {
+    const comments = this.state.listComments
     let arrDates = comments.map( (comment) => {
       let commentDate = new Date(comment.createdAt);
       return commentDate.getHours();
@@ -26,7 +26,7 @@ class LineChart extends Component {
     
     arrDates.sort();
 
-    arrDates.reduce(function(prev, curr) {
+    arrDates.reduce((prev, curr) => {
       if( prev !== curr ) {
         numberComments[curr] = 1
       }else {
@@ -58,7 +58,7 @@ class LineChart extends Component {
     return (
       <div className="row">
         <h1>This is my Chart</h1>
-        <Line data={this.updateCanvas()} width={400} height={300}/>
+        <Line data={this.getData()} width={400} height={300}/>
       </div>
     )  
   }

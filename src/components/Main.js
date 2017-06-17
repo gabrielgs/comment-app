@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
+import {
+  BrowserRouter as Router,
+  Route,
+} from 'react-router-dom'
 import Form from './form/Form'
 import Comment from './comment/Comment'
 import LineChart from './linechart/LineChart'
+import Nav from './nav/Nav'
+import './Main.css'
 
 class Main extends Component {
   constructor(props) {
@@ -20,13 +26,16 @@ class Main extends Component {
 
   render() {
     return (
-      <div className="container">
-        <Form listComments={this.state.comments} updateComments={this.updateComments}/>
-        <Comment listComments={this.state.comments} updateComments={this.updateComments}/>
-        <div className="row">
-          <LineChart listComments={this.state.comments} updateComments={this.updateComments}/>
+      <Router>
+        <div className="container">
+          <Nav />
+          <main className="main">
+            <Route exact path='/' component={Form}/>
+            <Route exact path='/' component={Comment}/>
+            <Route path='/estadisticas' component={LineChart}/>
+          </main>
         </div>
-      </div>
+      </Router>
     )
   }
 }

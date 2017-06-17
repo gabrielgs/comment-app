@@ -28,12 +28,14 @@ class Comments extends Component {
   }
 
   edit() {
-    var message = document.getElementById('js-editComment').value;
+    const message = document.getElementById('js-editComment').value;
+    const comment = this.state.comment;
+
     let newState = this.props.listComments;
 
-    var comment = this.state.comment;
+    
 
-    var foundIndexComment = newState.findIndex(x => x.id === comment.id);
+    const foundIndexComment = newState.findIndex(x => x.id === comment.id);
     newState[foundIndexComment].message = message;
 
     //this.setState({comments: newState});
@@ -44,7 +46,7 @@ class Comments extends Component {
   }
 
   fillModal(comment) {
-    var inputModal = document.getElementById('js-editComment');
+    let inputModal = document.getElementById('js-editComment');
     inputModal.value = comment.message;
 
     this.setState({comment: comment});
@@ -55,8 +57,8 @@ class Comments extends Component {
   displayComments() {
     let resultArray = [];
 
-    this.props.listComments.map((comment) => {
-      let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second:'numeric' };
+    this.props.listComments.map( comment => {
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second:'numeric' };
       let createdAt = new Date(comment.createdAt).toLocaleDateString('es-MX', options);
 
       resultArray.push(
@@ -72,7 +74,6 @@ class Comments extends Component {
         </li>
       );
     });
-
     return resultArray;
   }
 
