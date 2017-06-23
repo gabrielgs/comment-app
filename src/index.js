@@ -1,10 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-//import App from './App';
+import {
+  BrowserRouter as Router,
+  Route
+} from 'react-router-dom'
 import Main from './components/Main'
+import LineChart from './components/linechart/LineChart'
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
-ReactDOM.render(<Main />, document.getElementById('root')
+ReactDOM.render(
+  <Router>
+    <div>
+      <Route exact path="/" component={Main} />
+      <Route path="/estadisticas" component={LineChart} />
+    </div>
+  </Router>
+  , document.getElementById('root')
 );
 registerServiceWorker();

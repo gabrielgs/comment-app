@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import './LineChart.css'
 import Chart from 'chart.js'
 import {Line} from 'react-chartjs-2'
+import Nav from '../nav/Nav'
 
 class LineChart extends Component {
   constructor(props) {
@@ -14,27 +15,45 @@ class LineChart extends Component {
 
   getData() {
     const comments = this.state.listComments
-    let arrDates = comments.map( (comment) => {
-      let commentDate = new Date(comment.createdAt);
-      return commentDate.getHours();
-    });
-
-    let numberComments = [
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-    ];
     
-    arrDates.sort();
+    function orderBySex(sex) {
+      return comments.filter( comment => comment.sex == sex )
+    }
 
-    arrDates.reduce((prev, curr) => {
-      if( prev !== curr ) {
-        numberComments[curr] = 1
-      }else {
-        numberComments[curr]++;
+    function getNumberOfComments(sex) {
+      let numberComments = [
+        null, null, null, null, null, null, null, null, null, null, null, null,
+        null, null, null, null, null, null, null, null, null, null, null, null
+      ];
+
+      const commentsBySex = orderBySex(sex)
+
+      const arrHour = commentsBySex.map( comment => {
+        const commentDate = new Date(comment.createdAt);
+        return commentDate.getHours();
+      })
+
+      arrHour.sort( (a, b) => a - b)
+      const lastHour = arrHour[arrHour.length-1]
+
+      arrHour.reduce( (prev, curr) => {
+        if (prev !== curr) {
+          numberComments[curr] = 1
+        }else {
+          numberComments[curr]++
+        }
+
+        return (prev = curr)
+
+      }, 0)
+
+      debugger
+      for(let i = 0; i < lastHour; i++) {
+        numberComments[i] = numberComments[i] === null ? 0 : numberComments[i]
       }
 
-      return (prev = curr)
-    }, undefined)
+      return numberComments
+    }
 
     let data = {
       labels: [
@@ -42,10 +61,17 @@ class LineChart extends Component {
         "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"
       ],
       datasets: [{
-        label: "Comentarios por hora",
+        label: "Hombres",
         backgroundColor: '#B0D0D3',
         borderColor: '#B0D0D3',
-        data: numberComments,
+        data: getNumberOfComments('masculino'),
+        fill: false
+      },
+      {
+        data: getNumberOfComments('femenino'),
+        label: 'Mujeres',
+        backgroundColor: '#BDDF67',
+        borderColor: '#BDDF67',
         fill: false
       }]
     }
@@ -56,9 +82,14 @@ class LineChart extends Component {
   render() {
 
     return (
-      <div className="row">
-        <h1>This is my Chart</h1>
-        <Line data={this.getData()} width={400} height={300}/>
+      <div>
+        <Nav />
+        <main className="main">
+          <section className="container center">
+            <h3>This is my Chart</h3>
+            <Line data={this.getData()} width={200} height={200}/>
+          </section>
+        </main>
       </div>
     )  
   }
