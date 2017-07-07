@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import './LineChart.css'
 import Chart from 'chart.js'
 import {Line} from 'react-chartjs-2'
-import Nav from '../nav/Nav'
 
 class LineChart extends Component {
   constructor(props) {
@@ -83,7 +82,7 @@ class LineChart extends Component {
 
     return (
       <div>
-        <Nav />
+        {/*<Nav />*/}
         <main className="main">
           <section className="container center">
             <h3>This is my Chart</h3>
