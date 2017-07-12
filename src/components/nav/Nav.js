@@ -1,15 +1,16 @@
 import React, {Component} from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import './Nav.css'
 
 function Nav () {
   return(
     <header>
       <ul className="side-nav fixed">
         <li>
-          <NavLink to='/'>INICIO</NavLink>
+          <Link className="item" to='/'>INICIO</Link>
         </li>
         <li>
-          <NavLink to='/estadisticas'>Estadisticas</NavLink>
+          <Link className="item" to='/estadisticas'>Estadisticas</Link>
         </li>
       </ul>
     </header>
